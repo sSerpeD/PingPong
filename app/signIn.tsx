@@ -16,17 +16,26 @@ import { StatusBar } from "expo-status-bar";
 import { FontAwesome6, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import Loading from "../components/Loading";
+import { useAuth } from "@/context/authContext";
 
 export default function signIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const idRef = useRef("");
   const passwordRef = useRef("");
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     if (!idRef.current || !passwordRef.current) {
       Alert.alert("เข้าสู่ระบบ", "โปรดกรอกข้อมูลให้ครบถ้วน!");
       return;
+    }
+
+    setLoading(true);
+    const response = await login(idRef.current, passwordRef.current);
+    setLoading(false);
+    if (!response.success) {
+      Alert.alert("เข้าสู่ระบบ", "ข้อมูลผิดพลาด!");
     }
   };
   return (
