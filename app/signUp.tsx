@@ -3,7 +3,6 @@ import {
   Text,
   Image,
   TextInput,
-  ImageBackground,
   TouchableOpacity,
   Alert,
   Pressable,
@@ -21,22 +20,36 @@ import { useAuth } from "@/context/authContext";
 
 export default function signIn() {
   const router = useRouter();
+  const { register } = useAuth();
+
   const [loading, setLoading] = useState(false);
+
   const emailRef = useRef("");
   const passwordRef = useRef("");
-  const { login } = useAuth();
+  const usernameRef = useRef("");
+  const imageRef = useRef("");
 
-  const handleLogin = async () => {
-    if (!emailRef.current || !passwordRef.current) {
-      Alert.alert("เข้าสู่ระบบ", "โปรดกรอกข้อมูลให้ครบถ้วน!");
+  const handleRegister = async () => {
+    if (
+      !emailRef.current ||
+      !passwordRef.current ||
+      !usernameRef.current ||
+      !imageRef.current
+    ) {
+      Alert.alert("สมัครบัญชี", "โปรดกรอกข้อมูลให้ครบถ้วน!");
       return;
     }
 
     setLoading(true);
-    const response = await login(emailRef.current, passwordRef.current);
+    const response = await register(
+      emailRef.current,
+      passwordRef.current,
+      usernameRef.current,
+      imageRef.current
+    );
     setLoading(false);
     if (!response.success) {
-      Alert.alert("เข้าสู่ระบบ", response.msg);
+      Alert.alert("สมัครบัญชี", response.msg);
     }
   };
   return (
@@ -50,7 +63,7 @@ export default function signIn() {
         }}
         className="flex-1"
       >
-        <View className="items-center">
+        <View className="items-center max-h-[30vh]">
           <Image
             className="max-h-[7vh] mt-[15vh]"
             resizeMode="contain"
@@ -64,12 +77,27 @@ export default function signIn() {
             style={{ height: hp(6) }}
             className="flex-row gap-4 px-5 bg-neutral-100 items-center rounded-2xl"
           >
+            <FontAwesome6 name="user" size={hp(2.7)} color="gray" />
+            <TextInput
+              onChangeText={(value) => (usernameRef.current = value)}
+              style={{ fontSize: hp(2) }}
+              className="flex-1 font-semibold text-neutral-700"
+              placeholder="ชื่อ"
+              placeholderTextColor={"gray"}
+            />
+          </View>
+
+          <View
+            style={{ height: hp(6) }}
+            className="flex-row gap-4 px-4 bg-neutral-100 items-center rounded-2xl"
+          >
             <Octicons name="mail" size={hp(2.7)} color="gray" />
             <TextInput
               onChangeText={(value) => (emailRef.current = value)}
               style={{ fontSize: hp(2) }}
               className="flex-1 font-semibold text-neutral-700"
               placeholder="อีเมล"
+              secureTextEntry
               placeholderTextColor={"gray"}
             />
           </View>
@@ -89,9 +117,26 @@ export default function signIn() {
             />
           </View>
 
-          <View className="flex-row justify-center">
+          <View
+            style={{ height: hp(6) }}
+            className="flex-row gap-4 px-4 bg-neutral-100 items-center rounded-2xl"
+          >
+            <Octicons name="image" size={hp(2.7)} color="gray" />
+            <TextInput
+              onChangeText={(value) => (imageRef.current = value)}
+              style={{ fontSize: hp(2) }}
+              className="flex-1 font-semibold text-neutral-700"
+              placeholder="ลิงค์รูปภาพ"
+              secureTextEntry
+              placeholderTextColor={"gray"}
+            />
+          </View>
+
+          <View>
             {loading ? (
-              <Loading size={hp(12)} />
+              <View className="flex-row justify-center">
+                <Loading size={hp(12)} />
+              </View>
             ) : (
               <View
                 style={{
@@ -100,14 +145,14 @@ export default function signIn() {
                 className="rounded-2xl mt-2"
               >
                 <TouchableOpacity
-                  onPress={handleLogin}
+                  onPress={handleRegister}
                   className="py-[10px] px-8 bg-red-900 items-center rounded-3xl"
                 >
                   <Text
                     style={{ fontSize: hp(2) }}
                     className="font-semibold text-white"
                   >
-                    เข้าสู่ระบบ
+                    สมัครบัญชี
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -119,14 +164,14 @@ export default function signIn() {
               style={{ fontSize: hp(1.8) }}
               className="font-semibold text-neutral-500"
             >
-              {`ไม่มีบัญชี?`}
+              {`มีบัญชีอยู่แล้ว?`}
             </Text>
-            <Pressable onPress={() => router.push("/signUp")}>
+            <Pressable onPress={() => router.push("/signIn")}>
               <Text
                 style={{ fontSize: hp(1.8) }}
                 className="font-bold text-red-900"
               >
-                {` สมัครบัญชี `}
+                {` เข้าสู่ระบบ `}
               </Text>
             </Pressable>
           </View>
