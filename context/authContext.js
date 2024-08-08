@@ -29,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
 
     if(docSnap.exists()){
       let data = docSnap.data();
-      setUser({...user, username: data.username, imageUrl: data.imageUrl, userUd: data.userId})
+      setUser({...user, username: data.username, profileUrl: data.profileUrl, userUd: data.userId})
     }
   }
 

@@ -12,21 +12,5 @@ export default function Home() {
     await logout();
   };
 
-  return (
-    <View
-      style={{
-        height: hp(5),
-      }}
-      className="rounded-2xl mt-2"
-    >
-      <TouchableOpacity
-        onPress={handleLogout}
-        className="py-2 px-6 bg-red-900 items-center rounded-3xl"
-      >
-        <Text style={{ fontSize: hp(2) }} className="font-semibold text-white">
-          ออกจากระบบ
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+  return <View className="flex-1 bg-white"></View>;
 }
