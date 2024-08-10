@@ -10,11 +10,10 @@ import { MenuItem } from './CustomMenuItems'
 import {
   Menu,
   MenuOptions,
-  MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { useAuth } from "../context/authContext";
-import { FontAwesome6, MaterialIcons, Octicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const ios = Platform.OS =='ios';
 const blurhash =
@@ -47,27 +46,27 @@ export default function HomeHeader() {
                             {user?.username || "..."}
                         </Text> */}
                         <Menu>
-                        <MenuTrigger>
-                            <Image
-                            style={{height: hp(5.3), aspectRatio: 1, borderRadius: 1000}}
-                            placeholder={blurhash}
-                            source={user?.profileUrl}
-                            />
-                        </MenuTrigger>
-                        <MenuOptions
-                            customStyles={{optionsContainer: {
-                            borderRadius: 10,
-                            marginRight: 45,
-                            marginTop: 50,
-                            width: 140,
-                            }}}>
-                            <MenuItem
-                            text="Sign Out"
-                            action={handleLogOut}
-                            value={null}
-                            icon={<MaterialIcons name="logout" size={hp(2.5)} color="#737373"/>}
-                            />
-                        </MenuOptions>
+                            <MenuTrigger>
+                                <Image
+                                style={{height: hp(5.3), aspectRatio: 1, borderRadius: 1000}}
+                                placeholder={blurhash}
+                                source={user?.profileUrl}
+                                />
+                            </MenuTrigger>
+                            <MenuOptions
+                                customStyles={{optionsContainer: {
+                                borderRadius: 10,
+                                marginRight: 45,
+                                marginTop: 50,
+                                width: 140,
+                                }}}>
+                                <MenuItem
+                                text="Sign Out"
+                                action={handleLogOut}
+                                value={null}
+                                icon={<MaterialIcons name="logout" size={hp(2.5)} color="#737373"/>}
+                                />
+                            </MenuOptions>
                         </Menu>
                     </View>
                 </View>

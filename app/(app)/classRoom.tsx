@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Vibration } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import ClassRoomHeader from "@/components/ClassRoomHeader";
@@ -8,6 +8,17 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import Ping from "@/components/Ping";
+import { db } from "@/firebaseConfig";
+import {
+  collection,
+  doc,
+  DocumentData,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { useAuth } from "@/context/authContext";
 
 const formatName = (name: any) => {
   if (name.startsWith("ม.")) {
@@ -21,11 +32,48 @@ const formatName = (name: any) => {
 export default function ClassRoom() {
   const item = useLocalSearchParams();
   const router = useRouter();
+  const [members, setMembers] = useState<DocumentData[]>([]);
+  const { user } = useAuth();
 
+  const ONE_SECOND_IN_MS = 300;
+  const PATTERN = [
+    1 * ONE_SECOND_IN_MS,
+    2 * ONE_SECOND_IN_MS,
+    3 * ONE_SECOND_IN_MS,
+  ];
+  // Inside your component
+  useEffect(() => {
+    let roomId = Array.isArray(item.roomId) ? item.roomId[0] : item.roomId;
+
+    if (typeof roomId === "string") {
+      const docRef = doc(db, "rooms", roomId);
+      const membersRef = collection(docRef, "members");
+      const q = query(membersRef, orderBy("username", "asc"));
+
+      let unsub = onSnapshot(q, (snapshot) => {
+        let allMembers = snapshot.docs.map((doc) => {
+          const memberData = doc.data();
+          if (memberData.userId === user?.userId && memberData.ping) {
+            Vibration.vibrate(PATTERN);
+          }
+          return memberData;
+        });
+        setMembers([...allMembers]);
+      });
+
+      return unsub;
+    }
+  }, [item.roomId, user?.userId]);
+
+  useEffect(() => {
+    Vibration.vibrate();
+  }, []);
+
+  console.log("Memebrs: ", members);
   return (
     <View className="flex-1 bg-neutral-100">
       <StatusBar style="dark" />
-      <ClassRoomHeader user={item} router={router} />
+      <ClassRoomHeader room={item} router={router} />
 
       <View className="px-5 py-12  items-center">
         <Text style={{ fontSize: 22 }} className="font-bold">
@@ -49,13 +97,6 @@ export default function ClassRoom() {
         </View>
       </View>
 
-      {/* <View className="flex py-10 justify-center items-center">
-        <View
-          style={{ height: hp(0.2), width: wp(85) }}
-          className="bg-gray-300 rounded-full"border-right
-        />
-      </View> */}
-
       <View className="flex-row justify-between  py-32 px-10">
         <TouchableOpacity
           style={{
@@ -70,25 +111,7 @@ export default function ClassRoom() {
           <Ionicons name="bluetooth" size={hp(4.5)} color="gray" />
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={{
-            height: hp(10),
-            width: hp(10),
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          className="rounded-full bg-neutral-300 p-3"
-          onPress={() => console.log("Ping")}
-          onLongPress={() => console.log("StartPing")}
-          onPressOut={() => console.log("StopPing")}
-        >
-          <Text
-            style={{ fontSize: 18 }}
-            className="font-semibold text-gray-500 text-center"
-          >
-            PING
-          </Text>
-        </TouchableOpacity>
+        <Ping members={members} item={item} />
       </View>
     </View>
   );

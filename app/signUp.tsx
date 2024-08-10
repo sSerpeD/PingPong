@@ -146,7 +146,7 @@ export default function signIn() {
               >
                 <TouchableOpacity
                   onPress={handleRegister}
-                  className="py-[10px] px-8 bg-red-900 items-center rounded-3xl"
+                  className="py-[10px] px-8 bg-neutral-900  items-center rounded-3xl"
                 >
                   <Text
                     style={{ fontSize: hp(2) }}
@@ -169,7 +169,7 @@ export default function signIn() {
             <Pressable onPress={() => router.push("/signIn")}>
               <Text
                 style={{ fontSize: hp(1.8) }}
-                className="font-bold text-red-900"
+                className="font-bold text-neutral-900"
               >
                 {` เข้าสู่ระบบ `}
               </Text>
