@@ -28,7 +28,7 @@ export default function HomeFooter() {
     return (
       <View
         style={{
-          height: hp(15),
+          height: hp(12),
           backgroundColor: '#f6f6f6',
         }}
         className="flex-col justify-center px-16 pb-[3vh] rounded-t-3xl shadow-md"
@@ -43,29 +43,29 @@ export default function HomeFooter() {
             </Text>
           </Pressable>
           <View className='flex-col justify-center items-center gap-1'>
-          <Menu>
-            <MenuTrigger>
-              <Image
-                style={{height: hp(4.3), aspectRatio: 1, borderRadius: 1000}}
-                placeholder={blurhash}
-                source={user?.profileUrl}
-              />
-            </MenuTrigger>
-            <MenuOptions
-              customStyles={{optionsContainer: {
-                borderRadius: 10,
-                marginLeft: 45,
-                marginTop: -45,
-                width: 140,
-              }}}>
-              <MenuItem
-                text="Sign Out"
-                action={handleLogOut}
-                value={null}
-                icon={<MaterialIcons name="logout" size={hp(2.5)} color="#737373"/>}
-              />
-            </MenuOptions>
-          </Menu>
+            <Menu>
+              <MenuTrigger>
+                <Image
+                  style={{height: hp(4.3), aspectRatio: 1, borderRadius: 1000}}
+                  placeholder={blurhash}
+                  source={user?.profileUrl}
+                />
+              </MenuTrigger>
+              <MenuOptions
+                customStyles={{optionsContainer: {
+                  borderRadius: 10,
+                  marginLeft: 45,
+                  marginTop: -45,
+                  width: 140,
+                }}}>
+                <MenuItem
+                  text="Sign Out"
+                  action={handleLogOut}
+                  value={null}
+                  icon={<MaterialIcons name="logout" size={hp(2.5)} color="#737373"/>}
+                />
+              </MenuOptions>
+            </Menu>
             <Text style={{ fontSize: hp(1.5), fontWeight: '500', color: '#333' }}>
               {user?.username || "..."}
             </Text>

@@ -17,7 +17,7 @@ export default function Loading({size}) {
                 className="rounded-2xl mt-2"
               >
                 <View
-                  className="py-[10px] px-8 bg-red-900 items-center rounded-3xl"
+                  className="py-[10px] px-8 bg-neutral-900 items-center rounded-3xl"
                 >
                   <Text
                     style={{ fontSize: hp(2) }}
