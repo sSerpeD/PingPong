@@ -9,7 +9,7 @@ export default function Study({ size }) {
   return (
     <View
       style={{
-        backgroundColor: 'rgba(265, 110, 80, 0.9)', // White with 70% opacity
+        backgroundColor: 'rgba(245, 235, 84, 0.9)', // White with 70% opacity
         borderRadius: dimension / 2,
         height: dimension,
         width: dimension,

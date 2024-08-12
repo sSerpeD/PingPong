@@ -97,7 +97,7 @@ export default function ClassRoom() {
         <View
           style={{
             height: hp(38),
-            width: hp(38),
+            width: wp(82),
             justifyContent: "center",
             alignItems: "center",
           }}

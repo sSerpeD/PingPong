@@ -17,6 +17,14 @@ export default function Study({ size }) {
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden', // Ensures the Lottie animation fits within the circle
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 0.1,
+        elevation: 5, // This is for Android
       }}
     >
       <View
