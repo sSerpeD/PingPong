@@ -15,7 +15,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome6, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import Loading from "../components/Loading";
+import Loading from "../components/LottieLoading";
 import { useAuth } from "@/context/authContext";
 
 export default function signIn() {
@@ -132,10 +132,10 @@ export default function signIn() {
             />
           </View>
 
-          <View>
+          <View className="flex-row justify-center">
             {loading ? (
               <View className="flex-row justify-center">
-                <Loading size={hp(12)} />
+                <Loading />
               </View>
             ) : (
               <View
@@ -146,7 +146,7 @@ export default function signIn() {
               >
                 <TouchableOpacity
                   onPress={handleRegister}
-                  className="py-[10px] px-8 bg-neutral-900  items-center rounded-3xl"
+                  className="py-[10px] px-8 bg-neutral-900 items-center rounded-3xl"
                 >
                   <Text
                     style={{ fontSize: hp(2) }}
@@ -159,22 +159,26 @@ export default function signIn() {
             )}
           </View>
 
-          <View className="flex-row justify-center">
-            <Text
-              style={{ fontSize: hp(1.8) }}
-              className="font-semibold text-neutral-500"
-            >
-              {`มีบัญชีอยู่แล้ว?`}
-            </Text>
-            <Pressable onPress={() => router.push("/signIn")}>
+          {loading ? (
+            <></>
+          ) : (
+            <View className="flex-row justify-center">
               <Text
                 style={{ fontSize: hp(1.8) }}
-                className="font-bold text-neutral-900"
+                className="font-semibold text-neutral-500"
               >
-                {` เข้าสู่ระบบ `}
+                {`มีบัญชีอยู่แล้ว?`}
               </Text>
-            </Pressable>
-          </View>
+              <Pressable onPress={() => router.push("/signIn")}>
+                <Text
+                  style={{ fontSize: hp(1.8) }}
+                  className="font-bold text-neutral-900"
+                >
+                  {` เข้าสู่ระบบ `}
+                </Text>
+              </Pressable>
+            </View>
+          )}
         </View>
       </View>
     </View>

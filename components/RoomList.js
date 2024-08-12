@@ -6,14 +6,17 @@ import RoomItem from './RoomItem';
 export default function RoomList({ users }) {
   const router = useRouter();
 
+  // Sort the users array by name
+  const sortedUsers = users.slice().sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <View className="flex-1">
       <FlatList
-        data={users}
+        data={sortedUsers}
         contentContainerStyle={{
           flexGrow: 1,
           paddingVertical: 25,
-          paddingHorizontal: 10, // Padding on the left and right to create space from the screen edges
+          paddingHorizontal: 10,
         }}
         keyExtractor={(item) => item.id}
         numColumns={3}
@@ -23,7 +26,7 @@ export default function RoomList({ users }) {
             style={{
               width: '33%',
               padding: 5,
-              alignItems: 'center', // Center the item within its column,
+              alignItems: 'center',
             }}
             className='py-3'
           >

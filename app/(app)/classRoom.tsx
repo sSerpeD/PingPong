@@ -19,6 +19,8 @@ import {
   query,
 } from "firebase/firestore";
 import { useAuth } from "@/context/authContext";
+import Study from "@/components/LottieStudy";
+import Calling from "@/components/LottieCalling";
 
 const formatName = (name: any) => {
   if (name.startsWith("ม.")) {
@@ -33,13 +35,17 @@ export default function ClassRoom() {
   const item = useLocalSearchParams();
   const router = useRouter();
   const [members, setMembers] = useState<DocumentData[]>([]);
+  const [pingImage, setPingImage] = useState(false);
   const { user } = useAuth();
 
-  const ONE_SECOND_IN_MS = 300;
+  const ONE_SECOND_IN_MS = 500;
   const PATTERN = [
     1 * ONE_SECOND_IN_MS,
     2 * ONE_SECOND_IN_MS,
     3 * ONE_SECOND_IN_MS,
+    4 * ONE_SECOND_IN_MS,
+    5 * ONE_SECOND_IN_MS,
+    6 * ONE_SECOND_IN_MS,
   ];
   // Inside your component
   useEffect(() => {
@@ -54,7 +60,13 @@ export default function ClassRoom() {
         let allMembers = snapshot.docs.map((doc) => {
           const memberData = doc.data();
           if (memberData.userId === user?.userId && memberData.ping) {
+            setPingImage(true);
             Vibration.vibrate(PATTERN);
+
+            // Reset pingImage to false after 12.5 seconds
+            setTimeout(() => {
+              setPingImage(false);
+            }, 12500);
           }
           return memberData;
         });
@@ -91,9 +103,7 @@ export default function ClassRoom() {
           }}
           className="rounded-full bg-neutral-300 p-3 shadow-md"
         >
-          <Text className="font-semibold text-neutral-800 text-center">
-            {item.name}
-          </Text>
+          {pingImage ? <Calling size={35} /> : <Study size={35} />}
         </View>
       </View>
 

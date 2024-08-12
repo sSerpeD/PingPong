@@ -16,7 +16,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome6, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import Loading from "../components/Loading";
+import Loading from "../components/LottieLoading";
 import { useAuth } from "@/context/authContext";
 
 export default function signIn() {
@@ -91,7 +91,7 @@ export default function signIn() {
 
           <View className="flex-row justify-center">
             {loading ? (
-              <Loading size={hp(12)} />
+              <Loading />
             ) : (
               <View
                 style={{
@@ -114,22 +114,26 @@ export default function signIn() {
             )}
           </View>
 
-          <View className="flex-row justify-center">
-            <Text
-              style={{ fontSize: hp(1.8) }}
-              className="font-semibold text-neutral-500"
-            >
-              {`ไม่มีบัญชี?`}
-            </Text>
-            <Pressable onPress={() => router.push("/signUp")}>
+          {loading ? (
+            <></>
+          ) : (
+            <View className="flex-row justify-center">
               <Text
                 style={{ fontSize: hp(1.8) }}
-                className="font-bold text-neutral-900"
+                className="font-semibold text-neutral-500"
               >
-                {` สมัครบัญชี `}
+                {`ไม่มีบัญชี?`}
               </Text>
-            </Pressable>
-          </View>
+              <Pressable onPress={() => router.push("/signUp")}>
+                <Text
+                  style={{ fontSize: hp(1.8) }}
+                  className="font-bold text-neutral-900"
+                >
+                  {` สมัครบัญชี `}
+                </Text>
+              </Pressable>
+            </View>
+          )}
         </View>
       </View>
     </View>
