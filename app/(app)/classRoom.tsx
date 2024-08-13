@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, Vibration } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Vibration,
+  PermissionsAndroid,
+} from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -21,6 +27,7 @@ import {
 import { useAuth } from "@/context/authContext";
 import Study from "@/components/LottieStudy";
 import Calling from "@/components/LottieCalling";
+import Bluetooth from "@/components/Bluetooth";
 
 const formatName = (name: any) => {
   if (name.startsWith("ม.")) {
@@ -108,18 +115,7 @@ export default function ClassRoom() {
       </View>
 
       <View className="flex-row justify-between  py-32 px-10">
-        <TouchableOpacity
-          style={{
-            height: hp(10),
-            width: hp(10),
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          className="rounded-full bg-neutral-300 p-3"
-          onPress={() => {}}
-        >
-          <Ionicons name="bluetooth" size={hp(4.5)} color="gray" />
-        </TouchableOpacity>
+        <Bluetooth ping={pingImage} />
 
         <Ping members={members} item={item} />
       </View>
