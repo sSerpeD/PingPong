@@ -6,8 +6,8 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const manager = new BleManager();
 
-const SERVICE_UUID = "YOUR_SERVICE_UUID_HERE";
-const CHARACTERISTIC_UUID = "YOUR_CHARACTERISTIC_UUID_HERE";
+const SERVICE_UUID = "f7826da6-4fa2-4e98-8024-bc5b71e0893e";
+const CHARACTERISTIC_UUID = "a3c87500-8ed3-4bdf-8a39-a01bebede295";
 
 const Bluetooth = ({ ping }) => {
   const [isScanning, setIsScanning] = useState(false);

@@ -9,7 +9,11 @@ import {
 export default function Loading() {
   return (
     <View className="" style={{height: hp(15), width: wp(100), marginTop: hp(-5)}}>
-      <LottieView style={{flex: 1}} source={require('../assets/animations/loading.json')} autoPlay loop/>
+      <LottieView style={{
+            flex: 1,
+            height: '100%',
+            width: '100%',
+          }} source={require('../assets/animations/loading.json')} autoPlay loop/>
   </View>
 
   )

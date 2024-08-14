@@ -103,12 +103,10 @@ export default function ClassRoom() {
       <View className=" items-center">
         <View
           style={{
-            height: hp(38),
-            width: wp(82),
             justifyContent: "center",
             alignItems: "center",
           }}
-          className="rounded-full bg-neutral-300 p-3 shadow-md"
+          className="rounded-full bg-neutral-300 p-3 shadow-md h-[38vh] w-[82vw]"
         >
           {pingImage ? <Calling size={35} /> : <Study size={35} />}
         </View>
