@@ -123,13 +123,18 @@ const Bluetooth = ({ ping }) => {
         justifyContent: "center",
         alignItems: "center",
       }}
-      className="rounded-full bg-neutral-300 p-3"
+      className={`rounded-full p-3 ${
+        device 
+          ? "bg-blue-800" 
+          : (isScanning ? "bg-orange-600" : "bg-neutral-300")
+      }`}
+
       onPress={scanForDevice}
     >
       <Ionicons 
         name="bluetooth" 
         size={hp(4.5)} 
-        color={device ? "blue" : (isScanning ? "orange" : "gray")} 
+        color={"gray"} 
       />
     </TouchableOpacity>
   );

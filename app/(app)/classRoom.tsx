@@ -1,19 +1,8 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Vibration,
-  PermissionsAndroid,
-} from "react-native";
+import { View, Text, Vibration } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import ClassRoomHeader from "@/components/ClassRoomHeader";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { Feather, Ionicons } from "@expo/vector-icons";
 import Ping from "@/components/Ping";
 import { db } from "@/firebaseConfig";
 import {
