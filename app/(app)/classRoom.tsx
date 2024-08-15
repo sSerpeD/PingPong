@@ -73,10 +73,6 @@ export default function ClassRoom() {
     }
   }, [item.roomId, user?.userId]);
 
-  useEffect(() => {
-    Vibration.vibrate();
-  }, []);
-
   console.log("Memebrs: ", members);
   return (
     <View className="flex-1 bg-neutral-100">

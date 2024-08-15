@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PermissionsAndroid, Platform, TouchableOpacity } from 'react-native';
+import { PermissionsAndroid, Platform, TouchableOpacity, Alert } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import { Ionicons } from '@expo/vector-icons';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -67,24 +67,34 @@ const Bluetooth = ({ ping }) => {
     }
   };
 
+  const showAlert = (title, message) => {
+    Alert.alert(title, message, [{ text: "OK" }]);
+  };
+
   const scanForDevice = () => {
     if (!isScanning) {
       setIsScanning(true);
+      showAlert("Scanning", "Looking for SoundGuide device...");
       manager.startDeviceScan(null, null, (error, scannedDevice) => {
         if (error) {
           console.error('Scan error:', error);
           setIsScanning(false);
+          showAlert("Error", "Failed to scan for devices. Please try again.");
           return;
         }
-        if (scannedDevice.name.includes("SoundGuide")) {
+        if (scannedDevice.name && scannedDevice.name.includes("SoundGuide")) {
           manager.stopDeviceScan();
+          showAlert("Device Found", "SoundGuide device found. Attempting to connect...");
           connectToDevice(scannedDevice);
         }
       });
       // Stop scanning after 10 seconds
       setTimeout(() => {
-        manager.stopDeviceScan();
-        setIsScanning(false);
+        if (isScanning) {
+          manager.stopDeviceScan();
+          setIsScanning(false);
+          showAlert("Scan Timeout", "No SoundGuide device found. Please try again.");
+        }
       }, 10000);
     }
   };
@@ -95,8 +105,10 @@ const Bluetooth = ({ ping }) => {
       setDevice(connectedDevice);
       setIsScanning(false);
       console.log('Connected to SoundGuide');
+      showAlert("Connected", "Successfully connected to SoundGuide device.");
     } catch (error) {
       console.error('Connection error:', error);
+      showAlert("Connection Error", "Failed to connect to the device. Please try again.");
     }
   };
 
@@ -109,8 +121,10 @@ const Bluetooth = ({ ping }) => {
           btoa('1') // Encode '1' to base64
         );
         console.log('Data sent successfully');
+        showAlert("Data Sent", "Command sent to SoundGuide device.");
       } catch (error) {
         console.error('Error sending data:', error);
+        showAlert("Send Error", "Failed to send data to the device. Please try reconnecting.");
       }
     }
   };
@@ -128,13 +142,12 @@ const Bluetooth = ({ ping }) => {
           ? "bg-blue-800" 
           : (isScanning ? "bg-orange-600" : "bg-neutral-300")
       }`}
-
       onPress={scanForDevice}
     >
       <Ionicons 
         name="bluetooth" 
         size={hp(4.5)} 
-        color={"gray"} 
+        color={device ? "white" : (isScanning ? "white" : "gray")} 
       />
     </TouchableOpacity>
   );
