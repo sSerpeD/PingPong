@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>NSBlutoothAlwaysUsageDescriptions</key>
-    <string>ESP32SoundguideApp needs acces to your Bluetooth</string>
-    <key>NSBluetoothPeripheralUsageDescriptions</key>
-    <string>ESP32SoundguideApp needs access to your Bluetooth</string>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
@@ -47,10 +43,15 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+    <key>NSBluetoothPeripheralUsageDescriptions</key>
+    <string>ESP32SoundguideApp needs access to your Bluetooth</string>
+    <key>NSBlutoothAlwaysUsageDescriptions</key>
+    <string>ESP32SoundguideApp needs acces to your Bluetooth</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>อนุญาติให้ SoundGuide เข้าถึงไมโครโฟน.</string>
     <key>NSUserActivityTypes</key>
     <array>
+      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
     </array>
     <key>UILaunchStoryboardName</key>
